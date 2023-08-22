@@ -9,6 +9,20 @@ var buf = NewByteBuffer(1024, binary.LittleEndian)
 var wBytes = []byte{1, 2, 3, 4, 5}
 var rBytes = []byte{0, 0, 0, 0, 0}
 
+func BenchmarkStringReadAndWrite(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		buf.Reset()
+		buf.WriteString("123456!@#$%^asdfgh")
+		buf.WriteInt32(0)
+		buf.WriteFloat32(3.1415926)
+		buf.WriteInt32(12345678)
+		buf.SetPosition(0)
+		buf.ReadString(-1)
+		buf.ReadInt32()
+		buf.ReadFloat32()
+	}
+}
+
 func BenchmarkByteBuffer(b *testing.B) {
 
 	Assert := func(val bool, ss error) {
@@ -58,13 +72,13 @@ func BenchmarkByteBuffer(b *testing.B) {
 		v7, e := buf.ReadFloat32()
 		Assert(v7 == 3.1415926, e)
 
-		e = buf.ReadBytes(rBytes, -1)
+		_, e = buf.ReadBytes(rBytes, -1)
 
-		// Assert(rBytes[0] == wBytes[0] && e == nil, e)
-		// Assert(rBytes[1] == wBytes[1] && e == nil, e)
-		// Assert(rBytes[2] == wBytes[2] && e == nil, e)
-		// Assert(rBytes[3] == wBytes[3] && e == nil, e)
-		// Assert(rBytes[4] == wBytes[4] && e == nil, e)
+		Assert(rBytes[0] == wBytes[0] && e == nil, e)
+		Assert(rBytes[1] == wBytes[1] && e == nil, e)
+		Assert(rBytes[2] == wBytes[2] && e == nil, e)
+		Assert(rBytes[3] == wBytes[3] && e == nil, e)
+		Assert(rBytes[4] == wBytes[4] && e == nil, e)
 
 		currentPos := buf.Position()
 		Assert(currentPos == originPos, e) // errors.New("Position")
