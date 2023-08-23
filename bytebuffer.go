@@ -20,15 +20,15 @@ const (
 
 // ErrorWriteOverflow
 // The data write pointer is out of bounds
-var ErrorWriteOverflow = errors.New("The data write pointer is out of bounds")
+var ErrorWriteOverflow = errors.New("the data write pointer is out of bounds")
 
 // ErrorReadOverflow
 // The data read pointer is out of bounds
-var ErrorReadOverflow = errors.New("The data read pointer is out of bounds")
+var ErrorReadOverflow = errors.New("the data read pointer is out of bounds")
 
 // ErrorPositionOverflow
 // Invalid data access pointer “offset”
-var ErrorPositionOverflow = errors.New("Invalid data access pointer “offset”")
+var ErrorPositionOverflow = errors.New("invalid data access pointer “offset”")
 
 // NewByteBuffer
 // Create a fixed-size memory buffer
